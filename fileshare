@@ -2,406 +2,203 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>BriScript 0.1</title>
+<title>ProxyApp</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-body {
-    margin: 0;
-    background: #080808;
-    color: #fff;
-    font-family: Arial, sans-serif;
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#fff;
+  color:#111;
 }
 
-header {
-    height: 64px;
-    border-bottom: 2px solid #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 18px;
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: 900;
+.app{
+  width:100%;
+  max-width:430px;
+  min-height:100vh;
+  padding:25px 20px;
+  display:flex;
+  flex-direction:column;
 }
 
-.version {
-    border: 2px solid #fff;
-    padding: 8px 12px;
-    font-size: 13px;
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-main {
-    max-width: 1200px;
-    margin: auto;
-    padding: 18px;
+.logo{
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:-1px;
 }
 
-.top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
+.settings{
+  width:42px;
+  height:42px;
+  border:2px solid #111;
+  background:#fff;
+  font-size:20px;
+  cursor:pointer;
 }
 
-h1 {
-    margin: 0;
-    font-size: 28px;
+.center{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-button {
-    background: #fff;
-    color: #000;
-    border: 2px solid #fff;
-    padding: 11px 18px;
-    font-weight: 900;
-    cursor: pointer;
+.status{
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:25px;
+  text-transform:uppercase;
 }
 
-button:hover {
-    background: #000;
-    color: #fff;
+.connect{
+  width:210px;
+  height:210px;
+  border-radius:50%;
+  border:4px solid #111;
+  background:#fff;
+  font-size:20px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.editor {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
+.connect:active{
+  transform:scale(.94);
 }
 
-.box {
-    border: 2px solid #fff;
-    min-height: 450px;
+.connect.connected{
+  background:#111;
+  color:#fff;
 }
 
-.box-title {
-    border-bottom: 2px solid #fff;
-    padding: 11px;
-    font-weight: 900;
+.server{
+  margin-top:35px;
+  width:100%;
+  border:2px solid #111;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
 }
 
-textarea {
-    width: 100%;
-    height: 400px;
-    resize: vertical;
-    border: 0;
-    outline: none;
-    background: #111;
-    color: #fff;
-    padding: 15px;
-    font-family: monospace;
-    font-size: 15px;
-    line-height: 1.6;
+.server-title{
+  font-weight:800;
 }
 
-#output {
-    padding: 15px;
-    min-height: 400px;
-    white-space: pre-wrap;
-    font-family: monospace;
-    line-height: 1.6;
+.server-name{
+  margin-top:4px;
+  color:#666;
+  font-size:14px;
 }
 
-.help {
-    margin-top: 15px;
-    border: 2px solid #fff;
-    padding: 15px;
+.arrow{
+  font-size:22px;
 }
 
-.help h2 {
-    margin-top: 0;
+.footer{
+  text-align:center;
+  font-size:12px;
+  color:#777;
+  padding:15px 0 5px;
 }
 
-.rule {
-    padding: 7px 0;
-    border-bottom: 1px solid #444;
-}
-
-code {
-    color: #fff;
-    font-family: monospace;
-}
-
-.error {
-    color: #ff5555;
-}
-
-.success {
-    color: #55ff88;
-}
-
-@media (max-width: 700px) {
-    .editor {
-        grid-template-columns: 1fr;
-    }
-
-    .box {
-        min-height: 350px;
-    }
-
-    textarea,
-    #output {
-        min-height: 300px;
-    }
-
-    .top {
-        align-items: stretch;
-        flex-direction: column;
-    }
+@media(max-height:650px){
+  .connect{
+    width:170px;
+    height:170px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">BriScript</div>
-    <div class="version">0.1</div>
-</header>
+<div class="app">
 
-<main>
+  <div class="header">
+    <div class="logo">ProxyApp</div>
+    <button class="settings">⚙</button>
+  </div>
 
-    <div class="top">
-        <h1>Редактор BriScript</h1>
-        <button onclick="runBriScript()">▶ Запустить</button>
+  <div class="center">
+
+    <div class="status" id="status">
+      Отключено
     </div>
 
-    <div class="editor">
+    <button class="connect" id="connect">
+      ПОДКЛЮЧИТЬ
+    </button>
 
-        <section class="box">
-            <div class="box-title">КОД BRI</div>
+    <div class="server">
+      <div>
+        <div class="server-title">Сервер</div>
+        <div class="server-name" id="server">
+          Не выбран
+        </div>
+      </div>
 
-            <textarea id="code">{
-show <> "Привет,_мир!"
-:
-show <> "Добро_пожаловать_в_BriScript!"
-(
-</textarea>
-        </section>
-
-        <section class="box">
-            <div class="box-title">РЕЗУЛЬТАТ</div>
-
-            <div id="output"></div>
-        </section>
-
+      <div class="arrow">›</div>
     </div>
 
-    <section class="help">
-        <h2>Правила BriScript 0.1</h2>
+  </div>
 
-        <div class="rule">
-            <code>{ }</code> — основной блок кода
-        </div>
+  <div class="footer">
+    ProxyApp
+  </div>
 
-        <div class="rule">
-            <code>:</code> — начать следующую часть скрипта
-        </div>
-
-        <div class="rule">
-            <code>(</code> — закончить скрипт
-        </div>
-
-        <div class="rule">
-            <code>)</code> — начать новый скрипт
-        </div>
-
-        <div class="rule">
-            <code>&lt;&gt;</code> — связать команду со значением
-        </div>
-
-        <div class="rule">
-            <code>_</code> — пробел в тексте
-        </div>
-
-        <div class="rule">
-            <code>" "</code> — текст
-        </div>
-
-        <div class="rule">
-            <code>show</code> — показать текст
-        </div>
-
-        <div class="rule">
-            <code>click link</code> — создать нажимаемую ссылку
-        </div>
-    </section>
-
-</main>
+</div>
 
 <script>
-function runBriScript() {
-    const code = document.getElementById("code").value;
-    const output = document.getElementById("output");
 
-    output.innerHTML = "";
+const button = document.getElementById("connect");
+const status = document.getElementById("status");
 
-    try {
-        interpret(code, output);
-    } catch (error) {
-        output.innerHTML =
-            '<div class="error">Ошибка: ' +
-            escapeHTML(error.message) +
-            '</div>';
-    }
-}
+let connected = false;
 
-function interpret(code, output) {
+button.addEventListener("click", () => {
 
-    code = code.trim();
+  connected = !connected;
 
-    if (!code) {
-        throw new Error("Код пустой.");
-    }
+  if(connected){
 
-    if (!code.startsWith("{")) {
-        throw new Error("Код должен начинаться с {");
-    }
+    status.textContent = "Подключено";
+    button.textContent = "ОТКЛЮЧИТЬ";
+    button.classList.add("connected");
 
-    if (!code.includes("(")) {
-        throw new Error("Не найден конец скрипта (");
-    }
+  }else{
 
-    const start = code.indexOf("{");
-    const end = code.lastIndexOf("(");
+    status.textContent = "Отключено";
+    button.textContent = "ПОДКЛЮЧИТЬ";
+    button.classList.remove("connected");
 
-    if (end <= start) {
-        throw new Error("Неправильная структура скрипта.");
-    }
+  }
 
-    let inside = code.substring(start + 1, end);
+});
 
-    /*
-        :
-        разделяет части скрипта
-    */
-
-    const parts = inside
-        .split(":")
-        .map(part => part.trim())
-        .filter(part => part.length > 0);
-
-    for (const part of parts) {
-        executePart(part, output);
-    }
-}
-
-function executePart(part, output) {
-
-    const lines = part
-        .split("\n")
-        .map(line => line.trim())
-        .filter(line => line.length > 0);
-
-    for (const line of lines) {
-
-        /*
-            SHOW
-        */
-
-        if (line.startsWith("show")) {
-
-            const match = line.match(
-                /^show\s*<>\s*"([\s\S]*)"$/
-            );
-
-            if (!match) {
-                throw new Error(
-                    'Неправильный синтаксис show: ' + line
-                );
-            }
-
-            let text = match[1];
-
-            /*
-                _ превращается в обычный пробел
-            */
-
-            text = text.replace(/_/g, " ");
-
-            const div = document.createElement("div");
-            div.textContent = text;
-
-            output.appendChild(div);
-
-            continue;
-        }
-
-        /*
-            CLICK LINK
-        */
-
-        if (line.startsWith("click link")) {
-
-            const match = line.match(
-                /^click\s+link\s*<>\s*"([^"]+)"$/
-            );
-
-            if (!match) {
-                throw new Error(
-                    'Неправильный синтаксис click link: ' + line
-                );
-            }
-
-            const url = match[1];
-
-            const link = document.createElement("a");
-
-            link.href = url;
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-
-            link.textContent = url;
-
-            link.style.display = "block";
-            link.style.color = "#fff";
-            link.style.margin = "8px 0";
-            link.style.textDecoration = "underline";
-
-            output.appendChild(link);
-
-            continue;
-        }
-
-        /*
-            НЕИЗВЕСТНАЯ КОМАНДА
-        */
-
-        throw new Error(
-            "Неизвестная команда: " + line
-        );
-    }
-}
-
-function escapeHTML(text) {
-    const div = document.createElement("div");
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-/*
-    Ctrl + Enter = запуск
-*/
-
-document.getElementById("code").addEventListener(
-    "keydown",
-    function(event) {
-
-        if (event.ctrlKey && event.key === "Enter") {
-            event.preventDefault();
-            runBriScript();
-        }
-
-    }
-);
 </script>
 
 </body>
