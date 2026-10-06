@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ProxyApp</title>
 
 <style>
@@ -11,27 +11,52 @@
   -webkit-tap-highlight-color:transparent;
 }
 
+:root{
+  --bg1:#03152f;
+  --bg2:#092d68;
+  --card:rgba(255,255,255,.075);
+  --card2:rgba(255,255,255,.05);
+  --border:rgba(255,255,255,.11);
+  --text:#fff;
+  --muted:rgba(255,255,255,.52);
+  --blue:#1677ff;
+  --green:#24d98a;
+}
+
 body{
   margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  color:white;
   min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
   background:
-    radial-gradient(circle at 50% 10%,#1768d8 0%,#092d68 35%,#03152f 80%);
+    radial-gradient(circle at 50% 5%,#1768d8 0%,var(--bg2) 35%,var(--bg1) 80%);
+  transition:.35s;
+}
+
+body.light{
+  --bg1:#e8f1ff;
+  --bg2:#c7dcff;
+  --card:rgba(255,255,255,.72);
+  --card2:rgba(255,255,255,.55);
+  --border:rgba(0,40,100,.12);
+  --text:#071a36;
+  --muted:rgba(7,26,54,.55);
+
+  background:
+    radial-gradient(circle at 50% 0%,#ffffff,#c7dcff 65%,#b4d0ff);
 }
 
 button{
   font:inherit;
-  color:inherit;
   border:0;
+  color:inherit;
   cursor:pointer;
 }
 
 .app{
-  width:100%;
   max-width:520px;
-  min-height:100vh;
   margin:auto;
+  min-height:100vh;
   padding:20px 18px 100px;
 }
 
@@ -39,8 +64,8 @@ button{
 
 .header{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
 
 .logo{
@@ -48,7 +73,7 @@ button{
   font-weight:800;
 }
 
-.header-right{
+.header-buttons{
   display:flex;
   gap:9px;
 }
@@ -57,8 +82,8 @@ button{
   width:45px;
   height:45px;
   border-radius:50%;
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.12);
+  background:var(--card);
+  border:1px solid var(--border);
   font-size:20px;
   transition:.2s;
 }
@@ -74,24 +99,30 @@ button{
   margin-top:24px;
 }
 
-.status-text{
+.status-small{
   font-size:12px;
-  opacity:.6;
+  color:var(--muted);
   letter-spacing:1px;
 }
 
 .active-name{
-  font-size:18px;
+  font-size:19px;
   font-weight:bold;
   margin-top:5px;
 }
 
+.work-time{
+  margin-top:6px;
+  font-size:12px;
+  color:var(--muted);
+}
+
 /* CONNECT */
 
-.center{
+.connect-wrap{
   display:flex;
   justify-content:center;
-  margin-top:30px;
+  margin-top:28px;
 }
 
 .connect{
@@ -100,8 +131,9 @@ button{
   border-radius:50%;
   background:linear-gradient(145deg,#1677ff,#0750c9);
   box-shadow:
-    0 0 0 10px rgba(20,110,255,.08),
+    0 0 0 10px rgba(22,119,255,.09),
     0 20px 60px rgba(0,70,255,.35);
+  color:white;
   font-size:18px;
   font-weight:bold;
   transition:.3s;
@@ -112,100 +144,247 @@ button{
 }
 
 .connect.connected{
-  background:linear-gradient(145deg,#20d987,#079b5a);
+  background:linear-gradient(145deg,#23db8b,#079a5b);
   box-shadow:
-    0 0 0 10px rgba(32,217,135,.08),
-    0 20px 60px rgba(0,200,120,.3);
+    0 0 0 10px rgba(35,219,139,.09),
+    0 20px 60px rgba(0,200,120,.28);
 }
 
-/* INFO */
+/* CURRENT */
 
 .current{
-  margin-top:30px;
+  margin-top:27px;
   padding:16px;
   border-radius:17px;
-  background:rgba(255,255,255,.075);
-  border:1px solid rgba(255,255,255,.1);
+  background:var(--card);
+  border:1px solid var(--border);
 }
 
-.current-top{
+.current-row{
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
 .current-title{
-  font-size:13px;
-  opacity:.55;
+  font-size:11px;
+  color:var(--muted);
 }
 
 .current-value{
+  margin-top:5px;
   font-size:17px;
   font-weight:bold;
-  margin-top:4px;
 }
 
-.ping{
-  color:#58d8ff;
+.current-ping{
+  color:#52d8ff;
   font-weight:bold;
-  font-size:14px;
 }
 
 /* PLUS */
 
-.plus-area{
+.plus-wrap{
   display:flex;
   justify-content:center;
-  margin-top:20px;
+  margin-top:18px;
 }
 
-.plus-btn{
-  width:55px;
-  height:55px;
+.plus{
+  width:54px;
+  height:54px;
   border-radius:50%;
-  background:#126df1;
-  font-size:30px;
+  background:var(--blue);
+  color:white;
+  font-size:29px;
   box-shadow:0 8px 30px rgba(0,80,255,.3);
   transition:.2s;
 }
 
-.plus-btn:active{
+.plus:active{
   transform:scale(.9);
 }
 
-/* BOTTOM */
+/* SECTIONS */
 
-.bottom{
-  position:fixed;
-  left:50%;
-  bottom:14px;
-  transform:translateX(-50%);
-  width:calc(100% - 30px);
-  max-width:490px;
-  display:flex;
-  gap:10px;
-  padding:8px;
-  background:rgba(4,20,43,.88);
-  backdrop-filter:blur(15px);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:20px;
-  z-index:5;
-}
-
-.bottom-btn{
-  flex:1;
-  padding:13px;
-  border-radius:13px;
-  background:transparent;
-  font-weight:bold;
+.section-title{
+  margin-top:28px;
+  margin-bottom:10px;
   font-size:13px;
-  opacity:.55;
-  transition:.2s;
+  font-weight:bold;
+  color:var(--muted);
 }
 
-.bottom-btn.active{
-  opacity:1;
-  background:#126df1;
+.provider{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:17px;
+  overflow:hidden;
+  margin-bottom:10px;
+  transition:.25s;
+}
+
+.provider-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:17px;
+}
+
+.provider-left{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.provider-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:var(--card2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.provider-name{
+  font-weight:bold;
+  font-size:16px;
+}
+
+.provider-description{
+  margin-top:4px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.arrow{
+  font-size:20px;
+  opacity:.65;
+  transition:.25s;
+}
+
+.provider.open .arrow{
+  transform:rotate(180deg);
+}
+
+/* SERVERS */
+
+.servers{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+}
+
+.provider.open .servers{
+  max-height:700px;
+}
+
+.server-content{
+  padding:0 12px 12px;
+}
+
+.best-server{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#176ff5,#0b4bb0);
+  color:white;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.best-server small{
+  display:block;
+  opacity:.7;
+  font-weight:normal;
+  margin-top:4px;
+}
+
+.server{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:13px 7px;
+  border-top:1px solid var(--border);
+}
+
+.server-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.server-flag{
+  font-size:20px;
+}
+
+.server-name{
+  font-size:14px;
+  font-weight:bold;
+}
+
+.server-info{
+  margin-top:3px;
+  font-size:10px;
+  color:var(--muted);
+}
+
+.server-right{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.ping{
+  color:#52d8ff;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.check{
+  color:var(--green);
+  font-size:21px;
+  font-weight:bold;
+}
+
+/* ADD PROXY CARD */
+
+.proxy-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:17px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.proxy-card-left{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.proxy-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:var(--card2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.proxy-title{
+  font-weight:bold;
+}
+
+.proxy-sub{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
 }
 
 /* OVERLAY */
@@ -226,8 +405,6 @@ button{
   pointer-events:auto;
 }
 
-/* SHEET */
-
 .sheet{
   position:absolute;
   left:0;
@@ -237,9 +414,15 @@ button{
   overflow:auto;
   padding:20px;
   background:#071a36;
+  color:white;
   border-radius:25px 25px 0 0;
   transform:translateY(100%);
   transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+
+body.light .sheet{
+  background:#f4f8ff;
+  color:#071a36;
 }
 
 .overlay.show .sheet{
@@ -254,24 +437,32 @@ button{
   margin:0 auto 20px;
 }
 
-.sheet h2{
-  margin:0 0 18px;
-  font-size:22px;
+body.light .handle{
+  background:rgba(0,0,0,.18);
 }
 
-/* ADD CHOICE */
+.sheet h2{
+  margin:0 0 18px;
+}
+
+/* CHOICES */
 
 .choice{
+  width:100%;
   display:flex;
   align-items:center;
-  gap:15px;
-  width:100%;
-  padding:17px;
-  margin-bottom:10px;
+  gap:14px;
   text-align:left;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.08);
+  padding:16px;
+  margin-bottom:10px;
   border-radius:15px;
+  background:rgba(255,255,255,.07);
+  color:white;
+}
+
+body.light .choice{
+  color:#071a36;
+  background:rgba(0,60,140,.06);
 }
 
 .choice-icon{
@@ -281,8 +472,7 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#116df1;
-  font-size:21px;
+  background:#126df1;
 }
 
 .choice-title{
@@ -291,153 +481,48 @@ button{
 
 .choice-sub{
   font-size:11px;
-  opacity:.5;
+  opacity:.55;
   margin-top:4px;
-}
-
-/* SERVER */
-
-.server{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:15px 5px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  gap:10px;
-}
-
-.server-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  min-width:0;
-}
-
-.server-icon{
-  width:40px;
-  height:40px;
-  border-radius:12px;
-  background:rgba(255,255,255,.08);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.server-name{
-  font-size:14px;
-  font-weight:bold;
-}
-
-.server-info{
-  font-size:11px;
-  opacity:.5;
-  margin-top:4px;
-}
-
-.server-right{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.check{
-  color:#35dc8b;
-  font-size:22px;
-  font-weight:bold;
-}
-
-.hide{
-  opacity:.5;
-  font-size:18px;
-}
-
-/* BEST */
-
-.best{
-  width:100%;
-  margin:5px 0 15px;
-  padding:15px;
-  border-radius:14px;
-  background:linear-gradient(135deg,#176ff5,#0b4bb0);
-  font-weight:bold;
-}
-
-.best small{
-  display:block;
-  opacity:.7;
-  margin-top:4px;
-  font-weight:normal;
-}
-
-/* BUTTONS */
-
-.main-btn{
-  width:100%;
-  padding:14px;
-  margin-top:15px;
-  border-radius:13px;
-  background:#116df1;
-  font-weight:bold;
-}
-
-.close-btn{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  border-radius:13px;
-  background:rgba(255,255,255,.08);
-}
-
-/* FORM */
-
-.form input,
-.form select{
-  width:100%;
-  padding:14px;
-  margin-bottom:10px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.1);
-  background:#102746;
-  color:white;
-  outline:none;
-}
-
-.form label{
-  display:block;
-  font-size:11px;
-  opacity:.5;
-  margin:7px 0 5px;
 }
 
 /* SETTINGS */
 
 .setting-group{
-  margin-bottom:20px;
+  margin-bottom:22px;
 }
 
 .group-title{
   font-size:11px;
-  opacity:.4;
+  opacity:.45;
   text-transform:uppercase;
-  margin-bottom:5px;
+  margin-bottom:6px;
 }
 
 .setting{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  padding:14px 4px;
-  border-bottom:1px solid rgba(255,255,255,.07);
+  align-items:center;
+  padding:14px 3px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+body.light .setting{
+  border-color:rgba(0,0,0,.08);
 }
 
 .setting b{
+  display:block;
   font-size:14px;
 }
 
-.setting span{
+.setting-info{
+  max-width:75%;
+}
+
+.setting-info span{
   display:block;
   font-size:11px;
-  opacity:.45;
+  opacity:.5;
   margin-top:4px;
 }
 
@@ -446,7 +531,8 @@ button{
   height:27px;
   padding:3px;
   border-radius:20px;
-  background:#263957;
+  background:#33445d;
+  transition:.2s;
 }
 
 .switch i{
@@ -466,17 +552,57 @@ button{
   transform:translateX(21px);
 }
 
+.close{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border-radius:13px;
+  background:rgba(255,255,255,.09);
+  color:inherit;
+}
+
+.primary{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border-radius:13px;
+  background:#126df1;
+  color:white;
+  font-weight:bold;
+}
+
+/* FORM */
+
+.form input,
+.form select{
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:#102746;
+  color:white;
+  outline:none;
+}
+
+.form label{
+  display:block;
+  font-size:11px;
+  opacity:.55;
+  margin:7px 0 5px;
+}
+
 /* TOAST */
 
 .toast{
   position:fixed;
   left:50%;
-  bottom:90px;
+  bottom:25px;
   transform:translate(-50%,20px);
-  background:white;
-  color:#071a36;
   padding:12px 17px;
   border-radius:12px;
+  background:white;
+  color:#071a36;
   font-size:13px;
   font-weight:bold;
   opacity:0;
@@ -489,13 +615,6 @@ button{
 .toast.show{
   opacity:1;
   transform:translate(-50%,0);
-}
-
-.empty{
-  text-align:center;
-  padding:25px;
-  opacity:.45;
-  font-size:13px;
 }
 </style>
 </head>
@@ -510,7 +629,7 @@ button{
       ProxyApp
     </div>
 
-    <div class="header-right">
+    <div class="header-buttons">
 
       <button class="icon-btn" onclick="openAdd()">
         ＋
@@ -527,7 +646,7 @@ button{
 
   <div class="status">
 
-    <div class="status-text" id="status">
+    <div class="status-small" id="status">
       НЕ ПОДКЛЮЧЕНО
     </div>
 
@@ -535,14 +654,18 @@ button{
       ProxyApp VPN
     </div>
 
+    <div class="work-time" id="workTime">
+      Сколько работает: 0 секунд
+    </div>
+
   </div>
 
 
-  <div class="center">
+  <div class="connect-wrap">
 
     <button
       class="connect"
-      id="connectBtn"
+      id="connectButton"
       onclick="toggleConnection()">
 
       ПОДКЛЮЧИТЬ
@@ -554,7 +677,7 @@ button{
 
   <div class="current">
 
-    <div class="current-top">
+    <div class="current-row">
 
       <div>
 
@@ -568,38 +691,188 @@ button{
 
       </div>
 
-      <div class="ping" id="currentPing">
+      <div
+        class="current-ping"
+        id="currentPing">
+
         32 ms
+
       </div>
 
     </div>
 
   </div>
 
-</div>
+
+  <div class="plus-wrap">
+
+    <button
+      class="plus"
+      onclick="openAdd()">
+
+      ＋
+
+    </button>
+
+  </div>
 
 
-<!-- BOTTOM -->
+  <!-- VPN -->
 
-<div class="bottom">
-
-  <button
-    class="bottom-btn active"
-    id="vpnTab"
-    onclick="showVPN()">
-
+  <div class="section-title">
     🌐 VPN
+  </div>
 
-  </button>
 
-  <button
-    class="bottom-btn"
-    id="proxyTab"
-    onclick="showProxy()">
+  <div class="provider" id="proxyAppProvider">
 
+    <div
+      class="provider-head"
+      onclick="toggleProvider('proxyAppProvider')">
+
+      <div class="provider-left">
+
+        <div class="provider-icon">
+          🔵
+        </div>
+
+        <div>
+
+          <div class="provider-name">
+            ProxyApp
+          </div>
+
+          <div class="provider-description">
+            Свои серверы
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ↓
+      </div>
+
+    </div>
+
+
+    <div class="servers">
+
+      <div class="server-content">
+
+        <button
+          class="best-server"
+          onclick="bestServer('proxyapp')">
+
+          ⚡ Лучший сервер
+
+          <small>
+            Выбрать сервер с самым низким ping
+          </small>
+
+        </button>
+
+        <div id="proxyAppServers"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="provider" id="allVPNProvider">
+
+    <div
+      class="provider-head"
+      onclick="toggleProvider('allVPNProvider')">
+
+      <div class="provider-left">
+
+        <div class="provider-icon">
+          🌐
+        </div>
+
+        <div>
+
+          <div class="provider-name">
+            AllVPN
+          </div>
+
+          <div class="provider-description">
+            Серверы AllVPN
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ↓
+      </div>
+
+    </div>
+
+
+    <div class="servers">
+
+      <div class="server-content">
+
+        <button
+          class="best-server"
+          onclick="bestServer('allvpn')">
+
+          ⚡ Лучший сервер
+
+          <small>
+            Выбрать сервер с самым низким ping
+          </small>
+
+        </button>
+
+        <div id="allVPNServers"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PROXY -->
+
+  <div class="section-title">
     🔌 Proxy
+  </div>
 
-  </button>
+  <div class="proxy-card">
+
+    <div class="proxy-card-left">
+
+      <div class="proxy-icon">
+        🔌
+      </div>
+
+      <div>
+
+        <div class="proxy-title">
+          Мои Proxy
+        </div>
+
+        <div class="proxy-sub" id="proxyCount">
+          0 прокси добавлено
+        </div>
+
+      </div>
+
+    </div>
+
+    <div style="font-size:22px;opacity:.5">
+      ›
+    </div>
+
+  </div>
 
 </div>
 
@@ -617,103 +890,58 @@ button{
 
     <h2>＋ Добавить</h2>
 
-    <button class="choice" onclick="openAddVPN()">
+    <button
+      class="choice"
+      onclick="openAddVPN()">
 
       <div class="choice-icon">
         🌐
       </div>
 
       <div>
+
         <div class="choice-title">
           Добавить VPN
         </div>
 
         <div class="choice-sub">
-          Добавить VPN-сервер
+          Добавить свой VPN
         </div>
+
       </div>
 
     </button>
 
 
-    <button class="choice" onclick="openAddProxy()">
+    <button
+      class="choice"
+      onclick="openAddProxy()">
 
       <div class="choice-icon">
         🔌
       </div>
 
       <div>
+
         <div class="choice-title">
           Добавить Proxy
         </div>
 
         <div class="choice-sub">
-          Добавить прокси-сервер
+          Добавить прокси
         </div>
+
       </div>
 
     </button>
 
-    <button class="close-btn" onclick="closeAdd()">
+
+    <button
+      class="close"
+      onclick="closeAdd()">
+
       Закрыть
-    </button>
 
-  </div>
-
-</div>
-
-
-<!-- VPN -->
-
-<div
-  class="overlay"
-  id="vpnOverlay"
-  onclick="backgroundClose(event,'vpnOverlay')">
-
-  <div class="sheet">
-
-    <div class="handle"></div>
-
-    <h2>🌐 VPN-серверы</h2>
-
-    <button class="best" onclick="bestVPN()">
-
-      ⚡ Лучший сервер
-
-      <small>
-        Автоматически выбрать сервер с минимальным ping
-      </small>
-
-    </button>
-
-    <div id="vpnList"></div>
-
-    <button class="close-btn" onclick="closeVPN()">
-      Закрыть
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- PROXY -->
-
-<div
-  class="overlay"
-  id="proxyOverlay"
-  onclick="backgroundClose(event,'proxyOverlay')">
-
-  <div class="sheet">
-
-    <div class="handle"></div>
-
-    <h2>🔌 Proxy</h2>
-
-    <div id="proxyList"></div>
-
-    <button class="close-btn" onclick="closeProxy()">
-      Закрыть
     </button>
 
   </div>
@@ -739,27 +967,17 @@ button{
       <label>Название</label>
 
       <input
-        id="vpnName"
+        id="newVPNName"
         placeholder="Например: My VPN">
 
       <label>Сервер</label>
 
       <input
-        id="vpnServer"
+        id="newVPNServer"
         placeholder="server.example.com">
 
-      <label>Протокол</label>
-
-      <select id="vpnProtocol">
-
-        <option>WireGuard</option>
-        <option>OpenVPN</option>
-        <option>IKEv2</option>
-
-      </select>
-
       <button
-        class="main-btn"
+        class="primary"
         onclick="addVPN()">
 
         Добавить VPN
@@ -767,7 +985,7 @@ button{
       </button>
 
       <button
-        class="close-btn"
+        class="close"
         onclick="closeAddVPN()">
 
         Отмена
@@ -799,34 +1017,24 @@ button{
       <label>Название</label>
 
       <input
-        id="proxyName"
+        id="newProxyName"
         placeholder="Например: My Proxy">
 
       <label>Сервер</label>
 
       <input
-        id="proxyServer"
+        id="newProxyServer"
         placeholder="proxy.example.com">
 
       <label>Порт</label>
 
       <input
-        id="proxyPort"
+        id="newProxyPort"
         type="number"
         placeholder="8080">
 
-      <label>Тип</label>
-
-      <select id="proxyType">
-
-        <option>HTTP</option>
-        <option>HTTPS</option>
-        <option>SOCKS5</option>
-
-      </select>
-
       <button
-        class="main-btn"
+        class="primary"
         onclick="addProxy()">
 
         Добавить Proxy
@@ -834,7 +1042,7 @@ button{
       </button>
 
       <button
-        class="close-btn"
+        class="close"
         onclick="closeAddProxy()">
 
         Отмена
@@ -868,16 +1076,27 @@ button{
         Подключение
       </div>
 
+
       <div class="setting">
 
-        <div>
-          <b>Автоподключение</b>
-          <span>Подключаться автоматически</span>
+        <div class="setting-info">
+
+          <b>
+            Автоподключение
+          </b>
+
+          <span>
+            Подключаться автоматически
+          </span>
+
         </div>
 
-        <div class="switch on"
-             onclick="toggleSwitch(this)">
+        <div
+          class="switch on"
+          onclick="toggleSwitch(this)">
+
           <i></i>
+
         </div>
 
       </div>
@@ -885,14 +1104,24 @@ button{
 
       <div class="setting">
 
-        <div>
-          <b>Автовыбор сервера</b>
-          <span>Выбирать лучший сервер</span>
+        <div class="setting-info">
+
+          <b>
+            Автовыбор сервера
+          </b>
+
+          <span>
+            Выбирать лучший сервер
+          </span>
+
         </div>
 
-        <div class="switch on"
-             onclick="toggleSwitch(this)">
+        <div
+          class="switch on"
+          onclick="toggleSwitch(this)">
+
           <i></i>
+
         </div>
 
       </div>
@@ -900,14 +1129,24 @@ button{
 
       <div class="setting">
 
-        <div>
-          <b>Показывать Ping</b>
-          <span>Показывать задержку</span>
+        <div class="setting-info">
+
+          <b>
+            Показывать Ping
+          </b>
+
+          <span>
+            Показывать задержку серверов
+          </span>
+
         </div>
 
-        <div class="switch on"
-             onclick="toggleSwitch(this)">
+        <div
+          class="switch on"
+          onclick="toggleSwitch(this)">
+
           <i></i>
+
         </div>
 
       </div>
@@ -915,14 +1154,24 @@ button{
 
       <div class="setting">
 
-        <div>
-          <b>Kill Switch</b>
-          <span>Защита при потере VPN</span>
+        <div class="setting-info">
+
+          <b>
+            Kill Switch
+          </b>
+
+          <span>
+            Защита при потере VPN
+          </span>
+
         </div>
 
-        <div class="switch"
-             onclick="toggleSwitch(this)">
+        <div
+          class="switch"
+          onclick="toggleSwitch(this)">
+
           <i></i>
+
         </div>
 
       </div>
@@ -936,16 +1185,27 @@ button{
         Приложение
       </div>
 
+
       <div class="setting">
 
-        <div>
-          <b>Уведомления</b>
-          <span>Уведомления о подключении</span>
+        <div class="setting-info">
+
+          <b>
+            Уведомления
+          </b>
+
+          <span>
+            Уведомления о подключении
+          </span>
+
         </div>
 
-        <div class="switch on"
-             onclick="toggleSwitch(this)">
+        <div
+          class="switch on"
+          onclick="toggleSwitch(this)">
+
           <i></i>
+
         </div>
 
       </div>
@@ -953,14 +1213,25 @@ button{
 
       <div class="setting">
 
-        <div>
-          <b>Тёмная тема</b>
-          <span>Тёмный интерфейс</span>
+        <div class="setting-info">
+
+          <b>
+            Тёмная тема
+          </b>
+
+          <span>
+            Переключить тему приложения
+          </span>
+
         </div>
 
-        <div class="switch on"
-             onclick="toggleSwitch(this)">
+        <div
+          class="switch on"
+          id="themeSwitch"
+          onclick="toggleTheme(this)">
+
           <i></i>
+
         </div>
 
       </div>
@@ -976,9 +1247,16 @@ button{
 
       <div class="setting">
 
-        <div>
-          <b>ProxyApp</b>
-          <span>Version 0.1 Beta</span>
+        <div class="setting-info">
+
+          <b>
+            ProxyApp
+          </b>
+
+          <span>
+            Version 0.1 Beta
+          </span>
+
         </div>
 
       </div>
@@ -987,7 +1265,7 @@ button{
 
 
     <button
-      class="close-btn"
+      class="close"
       onclick="closeSettings()">
 
       Готово
@@ -999,87 +1277,101 @@ button{
 </div>
 
 
-<div class="toast" id="toast"></div>
+<div
+  class="toast"
+  id="toast">
+</div>
 
 
 <script>
 
-/* DATA */
+/* =========================
+   DATA
+========================= */
 
-let connected = false;
-
-let activeVPN = "ProxyApp VPN";
-
-let activeProxy = null;
-
-let vpns = [
+const proxyAppServers = [
 
   {
-    name:"ProxyApp VPN",
-    server:"ProxyApp Network",
-    protocol:"ProxyApp",
-    ping:32,
-    hidden:false
+    name:"Россия",
+    flag:"🇷🇺",
+    ping:32
   },
 
   {
-    name:"AllVPN",
-    server:"Russia",
-    protocol:"VPN",
-    ping:48,
-    hidden:false
+    name:"Германия",
+    flag:"🇩🇪",
+    ping:57
   },
 
   {
-    name:"AllVPN Germany",
-    server:"Germany",
-    protocol:"VPN",
-    ping:76,
-    hidden:false
-  },
-
-  {
-    name:"AllVPN Netherlands",
-    server:"Netherlands",
-    protocol:"VPN",
-    ping:91,
-    hidden:false
-  },
-
-  {
-    name:"AllVPN USA",
-    server:"USA",
-    protocol:"VPN",
-    ping:148,
-    hidden:false
-  }
-
-];
-
-let proxies = [
-
-  {
-    name:"ProxyApp Proxy",
-    server:"ProxyApp",
-    port:"8080",
-    type:"HTTP",
-    ping:41
+    name:"Нидерланды",
+    flag:"🇳🇱",
+    ping:71
   }
 
 ];
 
 
-/* HELPERS */
+const allVPNServers = [
+
+  {
+    name:"Россия",
+    flag:"🇷🇺",
+    ping:42
+  },
+
+  {
+    name:"Германия",
+    flag:"🇩🇪",
+    ping:63
+  },
+
+  {
+    name:"Нидерланды",
+    flag:"🇳🇱",
+    ping:78
+  },
+
+  {
+    name:"США",
+    flag:"🇺🇸",
+    ping:143
+  }
+
+];
+
+
+let proxies=[];
+
+let activeVPN={
+  provider:"ProxyApp",
+  server:"Россия",
+  ping:32
+};
+
+let activeProxy=null;
+
+let connected=false;
+
+let connectionSeconds=0;
+
+let timer=null;
+
+
+/* =========================
+   HELPERS
+========================= */
 
 function $(id){
   return document.getElementById(id);
 }
 
-function showToast(text){
+
+function showToast(message){
 
   const toast=$("toast");
 
-  toast.textContent=text;
+  toast.textContent=message;
 
   toast.classList.add("show");
 
@@ -1090,24 +1382,45 @@ function showToast(text){
     toast.classList.remove("show");
 
   },1800);
+
 }
 
 
-/* CONNECTION */
+/* =========================
+   CONNECTION
+========================= */
 
 function toggleConnection(){
 
   connected=!connected;
 
-  const btn=$("connectBtn");
+  const button=$("connectButton");
 
   if(connected){
 
     $("status").textContent="ПОДКЛЮЧЕНО";
 
-    btn.textContent="ОТКЛЮЧИТЬ";
+    button.textContent="ОТКЛЮЧИТЬ";
 
-    btn.classList.add("connected");
+    button.classList.add("connected");
+
+    connectionSeconds=0;
+
+    $("workTime").textContent=
+      "Сколько работает: 0 секунд";
+
+    clearInterval(timer);
+
+    timer=setInterval(()=>{
+
+      connectionSeconds++;
+
+      $("workTime").textContent=
+        "Сколько работает: "+
+        connectionSeconds+
+        " секунд";
+
+    },1000);
 
     showToast("Подключено");
 
@@ -1115,9 +1428,14 @@ function toggleConnection(){
 
     $("status").textContent="НЕ ПОДКЛЮЧЕНО";
 
-    btn.textContent="ПОДКЛЮЧИТЬ";
+    button.textContent="ПОДКЛЮЧИТЬ";
 
-    btn.classList.remove("connected");
+    button.classList.remove("connected");
+
+    clearInterval(timer);
+
+    $("workTime").textContent=
+      "Сколько работает: 0 секунд";
 
     showToast("Отключено");
 
@@ -1126,90 +1444,72 @@ function toggleConnection(){
 }
 
 
-/* BOTTOM */
+/* =========================
+   PROVIDER OPEN
+========================= */
 
-function showVPN(){
+function toggleProvider(id){
 
-  $("vpnTab").classList.add("active");
+  const provider=$(id);
 
-  $("proxyTab").classList.remove("active");
-
-  openVPN();
-
-}
-
-function showProxy(){
-
-  $("proxyTab").classList.add("active");
-
-  $("vpnTab").classList.remove("active");
-
-  openProxy();
+  provider.classList.toggle("open");
 
 }
 
 
-/* VPN */
+/* =========================
+   RENDER SERVERS
+========================= */
 
-function openVPN(){
+function renderServers(){
 
-  renderVPN();
+  renderProviderServers(
+    "proxyAppServers",
+    proxyAppServers,
+    "ProxyApp"
+  );
 
-  $("vpnOverlay").classList.add("show");
+  renderProviderServers(
+    "allVPNServers",
+    allVPNServers,
+    "AllVPN"
+  );
 
 }
 
-function closeVPN(){
 
-  $("vpnOverlay").classList.remove("show");
+function renderProviderServers(elementId,servers,provider){
 
-}
+  const container=$(elementId);
 
-function renderVPN(){
+  container.innerHTML="";
 
-  const list=$("vpnList");
+  servers.forEach(server=>{
 
-  list.innerHTML="";
+    const active=
+      activeVPN.provider===provider &&
+      activeVPN.server===server.name;
 
-  const visible=vpns.filter(v=>!v.hidden);
+    const div=document.createElement("div");
 
-  if(visible.length===0){
+    div.className="server";
 
-    list.innerHTML=
-      `<div class="empty">
-        Все VPN-серверы скрыты
-      </div>`;
-
-    return;
-
-  }
-
-  visible.forEach(vpn=>{
-
-    const active=vpn.name===activeVPN;
-
-    const item=document.createElement("div");
-
-    item.className="server";
-
-    item.innerHTML=`
+    div.innerHTML=`
 
       <div class="server-left">
 
-        <div class="server-icon">
-          🌐
+        <div class="server-flag">
+          ${server.flag}
         </div>
 
         <div>
 
           <div class="server-name">
-            ${escapeHTML(vpn.name)}
+            ${server.name}
           </div>
 
           <div class="server-info">
-            ${escapeHTML(vpn.server)}
-            ·
-            ${escapeHTML(vpn.protocol)}
+            ${provider}
           </div>
 
         </div>
@@ -1219,81 +1519,92 @@ function renderVPN(){
       <div class="server-right">
 
         <div class="ping">
-          ${vpn.ping} ms
+          ${server.ping} ms
         </div>
 
         <div class="check">
           ${active ? "✓" : ""}
         </div>
 
-        <button
-          class="hide"
-          onclick="hideVPN(event,'${escapeJS(vpn.name)}')">
-
-          👁
-
-        </button>
-
       </div>
     `;
 
-    item.onclick=(event)=>{
+    div.onclick=()=>{
 
-      if(event.target.closest(".hide")) return;
-
-      activeVPN=vpn.name;
-
-      $("activeName").textContent=vpn.name;
-
-      $("currentValue").textContent=vpn.name;
-
-      $("currentPing").textContent=vpn.ping+" ms";
-
-      renderVPN();
-
-      showToast(vpn.name+" выбран");
+      selectServer(
+        provider,
+        server
+      );
 
     };
 
-    list.appendChild(item);
+    container.appendChild(div);
 
   });
 
 }
 
 
-/* BEST VPN */
+/* =========================
+   SELECT SERVER
+========================= */
 
-function bestVPN(){
+function selectServer(provider,server){
 
-  const visible=vpns.filter(v=>!v.hidden);
+  activeVPN={
+    provider:provider,
+    server:server.name,
+    ping:server.ping
+  };
 
-  if(visible.length===0){
+  $("activeName").textContent=
+    provider+" · "+server.name;
 
-    showToast("Нет доступных серверов");
+  $("currentValue").textContent=
+    provider+" · "+server.name;
 
-    return;
-  }
+  $("currentPing").textContent=
+    server.ping+" ms";
 
-  let best=visible[0];
+  renderServers();
 
-  visible.forEach(vpn=>{
+  showToast(
+    server.name+
+    " · "+
+    server.ping+
+    " ms"
+  );
 
-    if(vpn.ping<best.ping){
-      best=vpn;
+}
+
+
+/* =========================
+   BEST SERVER
+========================= */
+
+function bestServer(provider){
+
+  let servers=
+    provider==="ProxyApp"
+      ? proxyAppServers
+      : allVPNServers;
+
+  let best=servers[0];
+
+  servers.forEach(server=>{
+
+    if(server.ping<best.ping){
+
+      best=server;
+
     }
 
   });
 
-  activeVPN=best.name;
-
-  $("activeName").textContent=best.name;
-
-  $("currentValue").textContent=best.name;
-
-  $("currentPing").textContent=best.ping+" ms";
-
-  renderVPN();
+  selectServer(
+    provider,
+    best
+  );
 
   showToast(
     "Лучший сервер: "+
@@ -1306,42 +1617,9 @@ function bestVPN(){
 }
 
 
-/* HIDE VPN */
-
-function hideVPN(event,name){
-
-  event.stopPropagation();
-
-  const vpn=vpns.find(v=>v.name===name);
-
-  if(!vpn) return;
-
-  vpn.hidden=true;
-
-  if(activeVPN===name){
-
-    activeVPN="ProxyApp VPN";
-
-    const defaultVPN=
-      vpns.find(v=>v.name==="ProxyApp VPN");
-
-    $("activeName").textContent=activeVPN;
-
-    $("currentValue").textContent=activeVPN;
-
-    $("currentPing").textContent=
-      defaultVPN.ping+" ms";
-
-  }
-
-  renderVPN();
-
-  showToast("Сервер скрыт");
-
-}
-
-
-/* ADD */
+/* =========================
+   ADD
+========================= */
 
 function openAdd(){
 
@@ -1356,7 +1634,9 @@ function closeAdd(){
 }
 
 
-/* ADD VPN */
+/* =========================
+   ADD VPN
+========================= */
 
 function openAddVPN(){
 
@@ -1376,160 +1656,154 @@ function closeAddVPN(){
 
 }
 
+
 function addVPN(){
 
-  const name=$("vpnName").value.trim();
+  const name=
+    $("newVPNName").value.trim();
 
-  const server=$("vpnServer").value.trim();
-
-  const protocol=$("vpnProtocol").value;
+  const server=
+    $("newVPNServer").value.trim();
 
   if(!name){
 
     showToast("Введите название VPN");
 
     return;
+
   }
 
-  const randomPing=
-    Math.floor(Math.random()*100)+30;
+  /*
+    Добавляем новый VPN
+    как отдельный provider-блок.
+  */
 
-  vpns.push({
+  const provider=
+    document.createElement("div");
 
-    name:name,
+  provider.className="provider";
 
-    server:server || "Сервер не указан",
+  provider.innerHTML=`
 
-    protocol:protocol,
+    <div
+      class="provider-head"
+      onclick="toggleCustomProvider(this)">
 
-    ping:randomPing,
+      <div class="provider-left">
 
-    hidden:false
+        <div class="provider-icon">
+          🌐
+        </div>
 
-  });
+        <div>
 
-  $("vpnName").value="";
+          <div class="provider-name">
+            ${escapeHTML(name)}
+          </div>
 
-  $("vpnServer").value="";
+          <div class="provider-description">
+            Свой VPN
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ↓
+      </div>
+
+    </div>
+
+    <div class="servers">
+
+      <div class="server-content">
+
+        <button
+          class="best-server"
+          onclick="event.stopPropagation();">
+
+          ⚡ Лучший сервер
+
+          <small>
+            Сервер добавлен
+          </small>
+
+        </button>
+
+        <div class="server">
+
+          <div class="server-left">
+
+            <div class="server-flag">
+              🌐
+            </div>
+
+            <div>
+
+              <div class="server-name">
+                ${escapeHTML(server || "Мой сервер")}
+              </div>
+
+              <div class="server-info">
+                ${escapeHTML(name)}
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="server-right">
+
+            <div class="ping">
+              50 ms
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  /*
+    Добавляем перед Proxy
+  */
+
+  const sectionTitle=
+    document.querySelectorAll(".section-title")[0];
+
+  sectionTitle.after(provider);
+
+  $("newVPNName").value="";
+  $("newVPNServer").value="";
 
   closeAddVPN();
-
-  showVPN();
 
   showToast("VPN добавлен");
 
 }
 
 
-/* PROXY */
+/* =========================
+   CUSTOM PROVIDER
+========================= */
 
-function openProxy(){
+function toggleCustomProvider(head){
 
-  renderProxy();
+  const provider=
+    head.parentElement;
 
-  $("proxyOverlay").classList.add("show");
-
-}
-
-function closeProxy(){
-
-  $("proxyOverlay").classList.remove("show");
-
-}
-
-function renderProxy(){
-
-  const list=$("proxyList");
-
-  list.innerHTML="";
-
-  if(proxies.length===0){
-
-    list.innerHTML=
-      `<div class="empty">
-        Proxy пока нет
-      </div>`;
-
-    return;
-
-  }
-
-  proxies.forEach(proxy=>{
-
-    const active=
-      activeProxy &&
-      activeProxy.name===proxy.name;
-
-    const item=document.createElement("div");
-
-    item.className="server";
-
-    item.innerHTML=`
-
-      <div class="server-left">
-
-        <div class="server-icon">
-          🔌
-        </div>
-
-        <div>
-
-          <div class="server-name">
-            ${escapeHTML(proxy.name)}
-          </div>
-
-          <div class="server-info">
-            ${escapeHTML(proxy.type)}
-            ·
-            ${escapeHTML(proxy.server)}
-            :
-            ${escapeHTML(proxy.port)}
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="server-right">
-
-        <div class="ping">
-          ${proxy.ping} ms
-        </div>
-
-        <div class="check">
-          ${active ? "✓" : ""}
-        </div>
-
-      </div>
-    `;
-
-    item.onclick=()=>{
-
-      activeProxy=proxy;
-
-      $("currentValue").textContent=
-        proxy.name;
-
-      $("currentPing").textContent=
-        proxy.ping+" ms";
-
-      $("activeName").textContent=
-        proxy.name;
-
-      renderProxy();
-
-      showToast(proxy.name+" выбран");
-
-    };
-
-    list.appendChild(item);
-
-  });
+  provider.classList.toggle("open");
 
 }
 
 
-/* ADD PROXY */
+/* =========================
+   ADD PROXY
+========================= */
 
 function openAddProxy(){
 
@@ -1543,62 +1817,68 @@ function openAddProxy(){
 
 }
 
+
 function closeAddProxy(){
 
   $("addProxyOverlay").classList.remove("show");
 
 }
 
+
 function addProxy(){
 
-  const name=$("proxyName").value.trim();
+  const name=
+    $("newProxyName").value.trim();
 
-  const server=$("proxyServer").value.trim();
+  const server=
+    $("newProxyServer").value.trim();
 
-  const port=$("proxyPort").value.trim();
-
-  const type=$("proxyType").value;
+  const port=
+    $("newProxyPort").value.trim();
 
   if(!name){
 
     showToast("Введите название Proxy");
 
     return;
+
   }
 
-  const randomPing=
-    Math.floor(Math.random()*100)+25;
+  const ping=
+    Math.floor(Math.random()*80)+25;
 
   proxies.push({
 
     name:name,
 
-    server:server || "Сервер не указан",
+    server:server || "Сервер",
 
-    port:port || "—",
+    port:port || "8080",
 
-    type:type,
-
-    ping:randomPing
+    ping:ping
 
   });
 
-  $("proxyName").value="";
+  $("proxyCount").textContent=
+    proxies.length+
+    (proxies.length===1
+      ? " прокси добавлено"
+      : " прокси добавлено");
 
-  $("proxyServer").value="";
-
-  $("proxyPort").value="";
+  $("newProxyName").value="";
+  $("newProxyServer").value="";
+  $("newProxyPort").value="";
 
   closeAddProxy();
-
-  showProxy();
 
   showToast("Proxy добавлен");
 
 }
 
 
-/* SETTINGS */
+/* =========================
+   SETTINGS
+========================= */
 
 function openSettings(){
 
@@ -1606,20 +1886,50 @@ function openSettings(){
 
 }
 
+
 function closeSettings(){
 
   $("settingsOverlay").classList.remove("show");
 
 }
 
-function toggleSwitch(el){
 
-  el.classList.toggle("on");
+function toggleSwitch(element){
+
+  element.classList.toggle("on");
 
 }
 
 
-/* CLOSE */
+/* =========================
+   DARK / LIGHT THEME
+========================= */
+
+function toggleTheme(element){
+
+  element.classList.toggle("on");
+
+  document.body.classList.toggle(
+    "light",
+    !element.classList.contains("on")
+  );
+
+  if(document.body.classList.contains("light")){
+
+    showToast("Светлая тема");
+
+  }else{
+
+    showToast("Тёмная тема");
+
+  }
+
+}
+
+
+/* =========================
+   CLOSE OVERLAY
+========================= */
 
 function backgroundClose(event,id){
 
@@ -1632,7 +1942,9 @@ function backgroundClose(event,id){
 }
 
 
-/* ESCAPE */
+/* =========================
+   SECURITY
+========================= */
 
 function escapeHTML(text){
 
@@ -1650,21 +1962,12 @@ function escapeHTML(text){
 
 }
 
-function escapeJS(text){
 
-  return String(text)
+/* =========================
+   START
+========================= */
 
-    .replaceAll("\\","\\\\")
-    .replaceAll("'","\\'");
-
-}
-
-
-/* START */
-
-renderVPN();
-
-renderProxy();
+renderServers();
 
 </script>
 
